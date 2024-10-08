@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const password = credentials.password as string | undefined;
 
         if (!email || !password){
-          throw new CredentialsSignin('Please provide both email and password')
+          throw new Error('Please provide both email and password')
         };
 
         const user = await prisma.user.findUnique({

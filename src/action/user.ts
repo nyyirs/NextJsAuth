@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation";
 import { hash } from "bcryptjs";
 import { signIn } from "@/lib/auth";
-import { CredentialsSignin } from "next-auth"
+import { CredentialsSignin } from "next-auth";
+
 
 const login = async (formData: FormData) => {
     const email = formData.get("email") as string;
@@ -16,11 +17,13 @@ const login = async (formData: FormData) => {
         email,
         password,
       });
+
     } catch (error) {
-        throw error;
-    }
+      const someError = error as CredentialsSignin;
+      return someError.cause?.err?.toString();
+    };
     redirect("/");
-  };
+}
 
 const register = async (formData: FormData) => {
     const firstName = formData.get('firstname') as string; 
